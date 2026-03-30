@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容创作工坊 - 小粥新媒体</title>
+    <meta name="description" content="专业的新媒体内容创作工具，提供标题生成、文案排版、标签生成等功能，助力创作者提升内容质量">
+    
+    <style>
+        :root {
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #16161f;
+            --bg-hover: #22222e;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            
+            --border-color: #2a2a35;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f5;
+            --bg-card: #ffffff;
+            --bg-hover: #f5f5fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --accent-primary: #4f46e5;
+            --accent-secondary: #7c3aed;
+            --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --border-color: #e0e0e8;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+        }
+
+        [data-theme="sakura"] {
+            --bg-primary: #fdf2f8;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #fce7f3;
+            --bg-card: #ffffff;
+            --bg-hover: #fbcfe8;
+            --text-primary: #831843;
+            --text-secondary: #9d174d;
+            --text-muted: #be185d;
+            --accent-primary: #ec4899;
+            --accent-secondary: #f472b6;
+            --accent-gradient: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            --border-color: #fbcfe8;
+            --shadow-sm: 0 2px 8px rgba(236,72,153,0.1);
+            --shadow-md: 0 8px 24px rgba(236,72,153,0.15);
+            --shadow-lg: 0 16px 48px rgba(236,72,153,0.2);
+        }
+
+        [data-theme="forest"] {
+            --bg-primary: #f0fdf4;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #dcfce7;
+            --bg-card: #ffffff;
+            --bg-hover: #bbf7d0;
+            --text-primary: #14532d;
+            --text-secondary: #166534;
+            --text-muted: #15803d;
+            --accent-primary: #22c55e;
+            --accent-secondary: #4ade80;
+            --accent-gradient: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+            --border-color: #bbf7d0;
+            --shadow-sm: 0 2px 8px rgba(34,197,94,0.1);
+            --shadow-md: 0 8px 24px rgba(34,197,94,0.15);
+            --shadow-lg: 0 16px 48px rgba(34,197,94,0.2);
+        }
+
+        [data-theme="ocean"] {
+            --bg-primary: #f0f9ff;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e0f2fe;
+            --bg-card: #ffffff;
+            --bg-hover: #bae6fd;
+            --text-primary: #0c4a6e;
+            --text-secondary: #075985;
+            --text-muted: #0369a1;
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            --border-color: #bae6fd;
+            --shadow-sm: 0 2px 8px rgba(14,165,233,0.1);
+            --shadow-md: 0 8px 24px rgba(14,165,233,0.15);
+            --shadow-lg: 0 16px 48px rgba(14,165,233,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background var(--transition-base), color var(--transition-base);
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+
+        /* 导航栏 - 复用首页样式 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(var(--bg-secondary), 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            -webkit-text-fill-color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-switcher { position: relative; }
+        
+        .theme-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all var(--transition-fast);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            min-width: 180px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-base);
+        }
+
+        .theme-switcher:hover .theme-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-secondary);
+        }
+
+        .theme-option:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 主内容区 */
+        .main-content { margin-top: 72px; min-height: calc(100vh - 72px); }
+
+        /* 页面头部 */
+        .page-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 48px;
+        }
+
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .breadcrumb a:hover { color: var(--accent-primary); }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        /* 工具标签页 */
+        .tools-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 48px;
+        }
+
+        .tools-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 4px;
+            overflow-x: auto;
+        }
+
+        .tool-tab {
+            padding: 16px 28px;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            background: transparent;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .tool-tab.active {
+            color: var(--accent-primary);
+            background: var(--bg-card);
+            border-bottom: 3px solid var(--accent-primary);
+            margin-bottom: -6px;
+        }
+
+        /* 工具面板 */
+        .tool-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tool-panel.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        @media (max-width: 968px) {
+            .tool-layout { grid-template-columns: 1fr; }
+        }
+
+        /* 输入面板 */
+        .input-panel, .output-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            font-size: 16px;
+        }
+
+        .icon-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        /* 表单元素 */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .form-hint {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all var(--transition-fast);
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 200px;
+            line-height: 1.8;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        /* 选项组 */
+        .options-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option-chip {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 14px;
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .option-chip:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .option-chip.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        /* 按钮 */
+        .btn {
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-primary);
+        }
+
+        /* 输出区域 */
+        .output-content {
+            min-height: 400px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .output-placeholder {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-align: center;
+            min-height: 350px;
+        }
+
+        .output-placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .result-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-item-text {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .result-item-actions {
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .result-item:hover .result-item-actions {
+            opacity: 1;
+        }
+
+        .result-item.copied {
+            border-color: var(--accent-success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .result-item.copied::after {
+            content: '已复制!';
+            position: absolute;
+            right: 60px;
+            background: var(--accent-success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* 排版预览 */
+        .format-preview {
+            line-height: 2;
+            font-size: 16px;
+            white-space: pre-wrap;
+        }
+
+        .format-preview h3 {
+            color: var(--accent-primary);
+            margin: 20px 0 12px;
+            font-size: 20px;
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 12px;
+        }
+
+        .format-preview p {
+            margin-bottom: 16px;
+            text-indent: 2em;
+        }
+
+        /* 标签云 */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .tag-item {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-item:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        .tag-item.copied {
+            background: var(--accent-success);
+            border-color: var(--accent-success);
+            color: white;
+        }
+
+        /* 统计信息 */
+        .stats-bar {
+            display: flex;
+            gap: 24px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value {
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        /* 加载动画 */
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(var(--bg-card), 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            z-index: 10;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 历史记录 */
+        .history-section {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .history-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .history-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 48px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* 提示框 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform var(--transition-base);
+            z-index: 9999;
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .toast.success .toast-icon { background: var(--accent-success); }
+        .toast.error .toast-icon { background: var(--accent-danger); }
+
+        /* 响应式 */
+        @media (max-width: 968px) {
+            .navbar { padding: 0 24px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .page-header { padding: 30px 24px; }
+            .tools-container { padding: 24px; }
+            .tools-tabs { gap: 8px; }
+            .tool-tab { padding: 12px 20px; font-size: 14px; }
+            .input-panel, .output-panel { padding: 24px; }
+        }
+
+        /* 快捷操作栏 */
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action-btn {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .quick-action-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">🥣</div>
+            <span>小粥新媒体</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="content-tools.html" class="active">内容创作</a></li>
+            <li><a href="data-analyzer.html">数据分析</a></li>
+            <li><a href="strategy-hub.html">运营策略</a></li>
+            <li><a href="calendar.html">内容日历</a></li>
+            <li><a href="resources.html">资源工具</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <div class="theme-switcher">
+                <button class="theme-btn" id="currentThemeBtn">🌙</button>
+                <div class="theme-dropdown">
+                    <div class="theme-option active" data-theme="dark" onclick="switchTheme('dark')">
+                        <div class="theme-dot" style="background: #1a1a2e;"></div>
+                        <span>深夜模式</span>
+                    </div>
+                    <div class="theme-option" data-theme="light" onclick="switchTheme('light')">
+                        <div class="theme-dot" style="background: #fafafa;"></div>
+                        <span>日间清晰</span>
+                    </div>
+                    <div class="theme-option" data-theme="sakura" onclick="switchTheme('sakura')">
+                        <div class="theme-dot" style="background: #fce7f3;"></div>
+                        <span>樱花粉韵</span>
+                    </div>
+                    <div class="theme-option" data-theme="forest" onclick="switchTheme('forest')">
+                        <div class="theme-dot" style="background: #dcfce7;"></div>
+                        <span>森林之境</span>
+                    </div>
+                    <div class="theme-option" data-theme="ocean" onclick="switchTheme('ocean')">
+                        <div class="theme-dot" style="background: #e0f2fe;"></div>
+                        <span>深海之蓝</span>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <!-- 页面头部 -->
+        <header class="page-header">
+            <div class="page-header-content">
+                <nav class="breadcrumb">
+                    <a href="index.html">首页</a>
+                    <span>/</span>
+                    <span>内容创作工坊</span>
+                </nav>
+                <h1 class="page-title">
+                    <span>✍️</span>
+                    <span>内容创作工坊</span>
+                </h1>
+                <p class="page-subtitle">
+                    专业级内容创作工具集，提供标题生成、文案排版、标签优化等功能，让您的内容创作效率提升300%
+                </p>
+            </div>
+        </header>
+
+        <!-- 工具容器 -->
+        <div class="tools-container">
+            <!-- 工具标签 -->
+            <div class="tools-tabs">
+                <button class="tool-tab active" onclick="switchTool('headline')">
+                    <span>🎯</span>
+                    <span>爆款标题生成器</span>
+                </button>
+                <button class="tool-tab" onclick="switchTool('formatter')">
+                    <span>🎨</span>
+                    <span>文案排版美化器</span>
+                </button>
+                <button class="tool-tab" onclick="switchTool('tags')">
+                    <span>🏷️</span>
+                    <span>标签话题生成器</span>
+                </button>
+            </div>
+
+            <!-- 工具1：标题生成器 -->
+            <div id="tool-headline" class="tool-panel active">
+                <div class="tool-layout">
+                    <!-- 输入区 -->
+                    <div class="input-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">
+                                <span>📝</span>
+                                <span>输入内容信息</span>
+                            </h3>
+                            <div class="panel-actions">
+                                <button class="icon-btn" onclick="clearHeadlineForm()" title="清空">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">内容主题 / 关键词</label>
+                            <input type="text" class="form-input" id="headlineTopic" placeholder="例如：新媒体运营技巧、美食探店、旅行攻略...">
+                            <div class="form-hint">输入您要创作的内容主题，支持多个关键词</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">目标平台</label>
+                            <select class="form-select" id="headlinePlatform">
+                                <option value="xiaohongshu">小红书（种草笔记）</option>
+                                <option value="douyin">抖音（短视频）</option>
+                                <option value="weixin">微信公众号（长图文）</option>
+                                <option value="weibo">微博（短内容）</option>
+                                <option value="bilibili">B站（中长视频）</option>
+                                <option value="zhihu">知乎（问答/文章）</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">内容类型</label>
+                            <div class="options-group">
+                                <span class="option-chip active" onclick="selectChip(this, 'type')">干货教程</span>
+                                <span class="option-chip" onclick="selectChip(this, 'type')">种草推荐</span>
+                                <span class="option-chip" onclick="selectChip(this, 'type')">经验分享</span>
+                                <span class="option-chip" onclick="selectChip(this, 'type')">热点评论</span>
+                                <span class="option-chip" onclick="selectChip(this, 'type')">故事叙述</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">风格偏好</label>
+                            <div class="options-group">
+                                <span class="option-chip active" onclick="selectChip(this, 'style')">专业严谨</span>
+                                <span class="option-chip" onclick="selectChip(this, 'style')">轻松幽默</span>
+                                <span class="option-chip" onclick="selectChip(this, 'style')">悬念吸引</span>
+                                <span class="option-chip" onclick="selectChip(this, 'style')">情感共鸣</span>
+                                <span class="option-chip" onclick="selectChip(this, 'style')">数据驱动</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="generateHeadlines()">
+                            <span>✨</span>
+                            <span>生成爆款标题</span>
+                        </button>
+
+                        <!-- 历史记录 -->
+                        <div class="history-section" id="headlineHistory" style="display: none;">
+                            <div class="history-title">🕐 生成历史</div>
+                            <div class="history-list" id="headlineHistoryList"></div>
+                        </div>
+                    </div>
+
+                    <!-- 输出区 -->
+                    <div class="output-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">
+                                <span>🎉</span>
+                                <span>生成结果</span>
+                            </h3>
+                            <div class="panel-actions">
+                                <button class="icon-btn" onclick="copyAllHeadlines()" title="复制全部">📋</button>
+                                <button class="icon-btn" onclick="refreshHeadlines()" title="重新生成">🔄</button>
+                            </div>
+                        </div>
+                        
+                        <div class="output-content" id="headlineOutput">
+                            <div class="output-placeholder">
+                                <div class="output-placeholder-icon">✨</div>
+                                <p>填写左侧表单并点击生成按钮</p>
+                                <p style="font-size: 14px; margin-top: 8px;">系统将为您生成10个优化后的爆款标题</p>
+                            </div>
+                        </div>
+
+                        <div class="stats-bar" id="headlineStats" style="display: none;">
+                            <div class="stat-item">
+                                <span>生成数量:</span>
+                                <span class="stat-value" id="headlineCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>预计点击率:</span>
+                                <span class="stat-value" id="headlineCTR">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>平台适配:</span>
+                                <span class="stat-value" id="headlinePlatformName">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工具2：排版美化器 -->
+            <div id="tool-formatter" class="tool-panel">
+                <div class="tool-layout">
+                    <!-- 输入区 -->
+                    <div class="input-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">
+                                <span>📄</span>
+                                <span>原始文案</span>
+                            </h3>
+                            <div class="panel-actions">
+                                <button class="icon-btn" onclick="clearFormatterForm()" title="清空">🗑️</button>
+                                <button class="icon-btn" onclick="pasteText()" title="粘贴">📋</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">输入需要排版的文案</label>
+                            <textarea class="form-textarea" id="formatterInput" placeholder="在这里粘贴您需要排版的原始文案...&#10;&#10;支持自动识别：&#10;- 段落优化&#10;- 自动添加emoji&#10;- 重点标记&#10;- 阅读节奏优化"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">排版风格</label>
+                            <select class="form-select" id="formatterStyle">
+                                <option value="standard">标准排版（适合公众号）</option>
+                                <option value="xiaohongshu">小红书风格（emoji丰富）</option>
+                                <option value="douyin">抖音风格（短句节奏）</option>
+                                <option value="minimal">极简风格（商务正式）</option>
+                                <option value="story">故事风格（情感共鸣）</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">优化选项</label>
+                            <div class="options-group">
+                                <span class="option-chip active" onclick="toggleChip(this)">自动分段</span>
+                                <span class="option-chip active" onclick="toggleChip(this)">添加emoji</span>
+                                <span class="option-chip active" onclick="toggleChip(this)">重点标记</span>
+                                <span class="option-chip" onclick="toggleChip(this)">添加小标题</span>
+                                <span class="option-chip active" onclick="toggleChip(this)">优化标点</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="beautifyText()">
+                            <span>🎨</span>
+                            <span>一键美化排版</span>
+                        </button>
+                    </div>
+
+                    <!-- 输出区 -->
+                    <div class="output-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">
+                                <span>✨</span>
+                                <span>排版预览</span>
+                            </h3>
+                            <div class="panel-actions">
+                                <button class="icon-btn" onclick="copyFormatted()" title="复制结果">📋</button>
+                                <button class="icon-btn" onclick="downloadText()" title="下载文本">💾</button>
+                            </div>
+                        </div>
+                        
+                        <div class="output-content" id="formatterOutput">
+                            <div class="output-placeholder">
+                                <div class="output-placeholder-icon">🎨</div>
+                                <p>排版后的内容将显示在这里</p>
+                                <p style="font-size: 14px; margin-top: 8px;">支持实时预览与一键复制</p>
+                            </div>
+                        </div>
+
+                        <div class="stats-bar" id="formatterStats" style="display: none;">
+                            <div class="stat-item">
+                                <span>原始字数:</span>
+                                <span class="stat-value" id="originalCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>排版后字数:</span>
+                                <span class="stat-value" id="formattedCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>阅读时长:</span>
+                                <span class="stat-value" id="readTime">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工具3：标签生成器 -->
+            <div id="tool-tags" class="tool-panel">
+                <div class="tool-layout">
+                    <!-- 输入区 -->
+                    <div class="input-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">
+                                <span>🏷️</span>
+                                <span>内容关键词</span>
+                            </h3>
+                            <div class="panel-actions">
+                                <button class="icon-btn" onclick="clearTagsForm()" title="清空">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">核心关键词（用空格分隔）</label>
+                            <input type="text" class="form-input" id="tagsKeywords" placeholder="例如：咖啡 探店 周末 北京 打卡">
+                            <div class="form-hint">输入3-5个核心关键词，系统会智能扩展相关标签</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">目标平台</label>
+                            <select class="form-select" id="tagsPlatform" onchange="updateTagSuggestions()">
+                                <option value="xiaohongshu">小红书（5-8个标签）</option>
+                                <option value="douyin">抖音（3-5个标签）</option>
+                                <option value="weibo">微博（2-3个话题）</option>
+                                <option value="weixin">公众号（关键词）</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">内容领域</label>
+                            <div class="options-group">
+                                <span class="option-chip active" onclick="selectChip(this, 'field')">生活方式</span>
+                                <span class="option-chip" onclick="selectChip(this, 'field')">美食探店</span>
+                                <span class="option-chip" onclick="selectChip(this, 'field')">旅行出游</span>
+                                <span class="option-chip" onclick="selectChip(this, 'field')">时尚穿搭</span>
+                                <span class="option-chip" onclick="selectChip(this, 'field')">数码科技</span>
+                                <span class="option-chip" onclick="selectChip(this, 'field')">职场成长</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">热门推荐标签（点击添加）</label>
+                            <div class="tag-cloud" id="suggestedTags">
+                                <span class="tag-item" onclick="addTag(this)">#生活记录</span>
+                                <span class="tag-item" onclick="addTag(this)">#日常分享</span>
+                                <span class="tag-item" onclick="addTag(this)">#种草</span>
+                                <span class="tag-item" onclick="addTag(this)">#探店</span>
+                                <span class="tag-item" onclick="addTag(this)">#OOTD</span>
+                                <span class="tag-item" onclick="addTag(this)">#美食</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="generateTags()">
+                            <span>🔍</span>
+                            <span>智能生成标签</span>
+                        </button>
+                    </div>
+
+                    <!-- 输出区 -->
+                    <div class="output-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">
+                                <span>🎯</span>
+                                <span>推荐标签组合</span>
+                            </h3>
+                            <div class="panel-actions">
+                                <button class="icon-btn" onclick="copyAllTags()" title="复制全部">📋</button>
+                                <button class="icon-btn" onclick="shuffleTags()" title="重新排序">🔀</button>
+                            </div>
+                        </div>
+                        
+                        <div class="output-content" id="tagsOutput">
+                            <div class="output-placeholder">
+                                <div class="output-placeholder-icon">🏷️</div>
+                                <p>生成的标签组合将显示在这里</p>
+                                <p style="font-size: 14px; margin-top: 8px;">点击标签可直接复制，支持自定义调整</p>
+                            </div>
+                        </div>
+
+                        <div class="stats-bar" id="tagsStats" style="display: none;">
+                            <div class="stat-item">
+                                <span>标签数量:</span>
+                                <span class="stat-value" id="tagsCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>预计曝光度:</span>
+                                <span class="stat-value" id="tagsExposure">高</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>覆盖领域:</span>
+                                <span class="stat-value" id="tagsCoverage">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2026 小粥新媒体 | 内容创作工坊 | 仅供学习交流使用</p>
+            <p style="margin-top: 8px; font-size: 12px;">免责声明：本平台仅提供新媒体运营相关信息咨询服务</p>
+        </div>
+    </footer>
+
+    <!-- 提示框 -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // ==================== 主题系统 ====================
+        function switchTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            const icons = { dark: '🌙', light: '☀️', sakura: '🌸', forest: '🌲', ocean: '🌊' };
+            document.getElementById('currentThemeBtn').textContent = icons[theme];
+            
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+                if(opt.dataset.theme === theme) opt.classList.add('active');
+            });
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        switchTheme(savedTheme);
+
+        // ==================== 工具切换 ====================
+        function switchTool(tool) {
+            document.querySelectorAll('.tool-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tool-panel').forEach(panel => panel.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(`tool-${tool}`).classList.add('active');
+        }
+
+        // ==================== 通用组件函数 ====================
+        function selectChip(element, group) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option-chip').forEach(chip => chip.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function toggleChip(element) {
+            element.classList.toggle('active');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==================== 标题生成器 ====================
+        const headlineTemplates = {
+            xiaohongshu: {
+                干货教程: [
+                    '🔥{topic} | 99%的人都不知道的秘诀',
+                    '✨{topic}攻略，建议收藏！',
+                    '💡{topic}，这样做效果翻倍',
+                    '📚{topic}入门到精通，一篇就够',
+                    '⚡️{topic}速成指南，新手必看',
+                    '🎯亲测有效！{topic}实战经验',
+                    '💯{topic}满分技巧，直接抄作业',
+                    '🆘{topic}避坑指南，别再踩雷了',
+                    '⏰3分钟学会{topic}，超简单',
+                    '🔥被问爆的{topic}方法，终于整理好了'
+                ],
+                种草推荐: [
+                    '✨{topic}，真的太好用了！',
+                    '💕挖到宝了！{topic}闭眼入',
+                    '🛒{topic}购物分享，无广纯分享',
+                    '🔥最近超火的{topic}，测评来了',
+                    '💎{topic}，精致女孩必备',
+                    '🌟{topic}使用心得，真实反馈',
+                    '💰{topic}性价比之王，学生党冲',
+                    '🎁{topic}开箱，仪式感拉满',
+                    '💯{topic}智商税？亲测告诉你',
+                    '🔥{topic}真的值得买吗？'
+                ]
+            },
+            douyin: {
+                干货教程: [
+                    '{topic}，原来这么简单！',
+                    '3秒学会{topic}，太实用了🔥',
+                    '{topic}的正确打开方式✅',
+                    '别再做错了！{topic}避坑指南',
+                    '{topic}，学会这招粉丝暴涨',
+                    '99%的人不知道的{topic}技巧',
+                    '{topic}，看完这个视频就会了',
+                    '手把手教你{topic}，包教包会',
+                    '{topic}，新手入门必看',
+                    '🔥{topic}，内行人才知道的方法'
+                ]
+            },
+            weixin: {
+                干货教程: [
+                    '{topic}：从0到1的完整指南',
+                    '深度解析：{topic}的核心方法论',
+                    '{topic} | 2026年最新趋势与策略',
+                    '干货收藏：{topic}的10个关键技巧',
+                    '为什么你的{topic}总是做不好？',
+                    '{topic}的底层逻辑，一文讲透',
+                    '万字长文：{topic}全攻略',
+                    '{topic}，看这一篇就够了',
+                    '关于{topic}，我想说的都在这里',
+                    '{topic}实战复盘：从失败到成功'
+                ]
+            }
+        };
+
+        let currentHeadlines = [];
+        let headlineHistory = JSON.parse(localStorage.getItem('headlineHistory') || '[]');
+
+        function generateHeadlines() {
+            const topic = document.getElementById('headlineTopic').value.trim();
+            const platform = document.getElementById('headlinePlatform').value;
+            
+            if(!topic) {
+                showToast('请输入内容主题', 'error');
+                return;
+            }
+
+            const output = document.getElementById('headlineOutput');
+            const type = document.querySelector('.option-chip.active[data-group="type"]')?.textContent || '干货教程';
+            
+            output.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
+            
+            setTimeout(() => {
+                let templates = headlineTemplates[platform]?.[type] || headlineTemplates.xiaohongshu[Object.keys(headlineTemplates.xiaohongshu)[0]];
+                
+                // 根据风格调整
+                const style = document.querySelector('.option-chip.active[data-group="style"]')?.textContent || '专业严谨';
+                
+                currentHeadlines = templates.map(t => t.replace(/{topic}/g, topic))
+                    .concat(generateVariations(topic, platform, style))
+                    .slice(0, 10);
+                
+                displayHeadlines(currentHeadlines);
+                updateHeadlineStats(platform, currentHeadlines.length);
+                addToHistory(topic, '标题生成');
+            }, 800);
+        }
+
+        function generateVariations(topic, platform, style) {
+            const variations = [];
+            const prefixes = {
+                '专业严谨': ['深度解析', '方法论', '核心策略', '实战指南'],
+                '轻松幽默': ['笑死', '离谱', '绝了', '救命'],
+                '悬念吸引': ['揭秘', '真相', '秘密', '内幕'],
+                '情感共鸣': ['坦白说', '说实话', '真心建议', '血泪教训'],
+                '数据驱动': ['实测', '数据说话', '对比分析', '效果验证']
+            };
+            
+            const pres = prefixes[style] || prefixes['专业严谨'];
+            pres.forEach(pre => {
+                variations.push(`${pre}：${topic}的正确姿势`);
+            });
+            
+            return variations;
+        }
+
+        function displayHeadlines(headlines) {
+            const output = document.getElementById('headlineOutput');
+            output.innerHTML = `
+                <div class="result-list">
+                    ${headlines.map((h, i) => `
+                        <div class="result-item" onclick="copyText('${h.replace(/'/g, "\\'")}', this)">
+                            <span class="result-item-text">${i+1}. ${h}</span>
+                            <div class="result-item-actions">
+                                <button class="icon-btn" onclick="event.stopPropagation(); copyText('${h.replace(/'/g, "\\'")}')" title="复制">📋</button>
+                                <button class="icon-btn" onclick="event.stopPropagation(); useHeadline('${h.replace(/'/g, "\\'")}')" title="使用">✓</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function copyText(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                if(element) {
+                    element.classList.add('copied');
+                    setTimeout(() => element.classList.remove('copied'), 2000);
+                }
+                showToast('已复制到剪贴板');
+            });
+        }
+
+        function copyAllHeadlines() {
+            if(currentHeadlines.length === 0) return;
+            copyText(currentHeadlines.join('\n'));
+        }
+
+        function refreshHeadlines() {
+            if(document.getElementById('headlineTopic').value) {
+                generateHeadlines();
+            }
+        }
+
+        function clearHeadlineForm() {
+            document.getElementById('headlineTopic').value = '';
+            document.getElementById('headlineOutput').innerHTML = `
+                <div class="output-placeholder">
+                    <div class="output-placeholder-icon">✨</div>
+                    <p>填写左侧表单并点击生成按钮</p>
+                </div>
+            `;
+            document.getElementById('headlineStats').style.display = 'none';
+        }
+
+        function updateHeadlineStats(platform, count) {
+            document.getElementById('headlineStats').style.display = 'flex';
+            document.getElementById('headlineCount').textContent = count;
+            document.getElementById('headlineCTR').textContent = (Math.random() * 5 + 3).toFixed(1) + '%';
+            
+            const platformNames = {
+                xiaohongshu: '小红书', douyin: '抖音', weixin: '公众号',
+                weibo: '微博', bilibili: 'B站', zhihu: '知乎'
+            };
+            document.getElementById('headlinePlatformName').textContent = platformNames[platform] || platform;
+        }
+
+        function addToHistory(topic, tool) {
+            const item = { topic, tool, time: new Date().toLocaleString() };
+            headlineHistory.unshift(item);
+            if(headlineHistory.length > 5) headlineHistory.pop();
+            localStorage.setItem('headlineHistory', JSON.stringify(headlineHistory));
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const container = document.getElementById('headlineHistory');
+            const list = document.getElementById('headlineHistoryList');
+            
+            if(headlineHistory.length > 0) {
+                container.style.display = 'block';
+                list.innerHTML = headlineHistory.map(h => `
+                    <div class="history-item" onclick="document.getElementById('headlineTopic').value='${h.topic}'">
+                        <span>${h.topic}</span>
+                        <span style="font-size: 12px;">${h.time.split(' ')[1]}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // ==================== 排版美化器 ====================
+        const emojis = {
+            xiaohongshu: ['✨', '💕', '🌟', '🔥', '💎', '📌', '💡', '🎯', '📸', '🛒'],
+            douyin: ['🔥', '⚡️', '💥', '✅', '❌', '⬆️', '⬇️', '💯', '🆘', '👀'],
+            standard: ['📌', '💡', '🔍', '✅', '⚠️', '💬', '📊', '🔗', '✨', '📍'],
+            minimal: ['•', '→', '▸', '※', '◆', '◇', '●', '○'],
+            story: ['🌙', '💭', '✨', '🌟', '💫', '🎈', '📖', '💌', '🎀', '🌸']
+        };
+
+        function beautifyText() {
+            const input = document.getElementById('formatterInput').value.trim();
+            if(!input) {
+                showToast('请输入需要排版的文案', 'error');
+                return;
+            }
+
+            const style = document.getElementById('formatterStyle').value;
+            const options = Array.from(document.querySelectorAll('#tool-formatter .option-chip.active')).map(c => c.textContent);
+            
+            let formatted = input;
+            
+            // 自动分段
+            if(options.includes('自动分段')) {
+                formatted = formatted
+                    .replace(/([。！？；.!?\n])\s*/g, '$1\n\n')
+                    .replace(/\n{3,}/g, '\n\n');
+            }
+            
+            // 添加emoji
+            if(options.includes('添加emoji')) {
+                const styleEmojis = emojis[style] || emojis.standard;
+                const lines = formatted.split('\n').filter(l => l.trim());
+                formatted = lines.map((line, i) => {
+                    if(line.trim() && i % 2 === 0 && Math.random() > 0.3) {
+                        const emoji = styleEmojis[i % styleEmojis.length];
+                        return `${emoji} ${line}`;
+                    }
+                    return line;
+                }).join('\n\n');
+            }
+            
+            // 重点标记
+            if(options.includes('重点标记')) {
+                formatted = formatted
+                    .replace(/【(.+?)】/g, '🔥$1🔥')
+                    .replace(/“(.+?)”/g, '✨$1✨')
+                    .replace(/"(.+?)"/g, '💡$1💡');
+            }
+            
+            // 添加小标题
+            if(options.includes('添加小标题')) {
+                const sections = formatted.split('\n\n');
+                if(sections.length > 2) {
+                    formatted = sections.map((s, i) => {
+                        if(i > 0 && i % 2 === 0 && s.length > 20) {
+                            return `📌 ${s.substring(0, 10)}...\n\n${s}`;
+                        }
+                        return s;
+                    }).join('\n\n');
+                }
+            }
+            
+            displayFormatted(formatted, input.length);
+        }
+
+        function displayFormatted(text, originalLength) {
+            const output = document.getElementById('formatterOutput');
+            output.innerHTML = `<div class="format-preview">${text.replace(/\n/g, '<br>')}</div>`;
+            
+            document.getElementById('formatterStats').style.display = 'flex';
+            document.getElementById('originalCount').textContent = originalLength;
+            document.getElementById('formattedCount').textContent = text.length;
+            document.getElementById('readTime').textContent = Math.ceil(text.length / 300) + '分钟';
+        }
+
+        function copyFormatted() {
+            const text = document.querySelector('#formatterOutput .format-preview')?.innerText;
+            if(text) copyText(text);
+        }
+
+        function downloadText() {
+            const text = document.querySelector('#formatterOutput .format-preview')?.innerText;
+            if(!text) return;
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `排版文案_${new Date().toLocaleDateString()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('文件已下载');
+        }
+
+        function pasteText() {
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('formatterInput').value = text;
+                showToast('已粘贴剪贴板内容');
+            }).catch(() => showToast('无法读取剪贴板', 'error'));
+        }
+
+        function clearFormatterForm() {
+            document.getElementById('formatterInput').value = '';
+            document.getElementById('formatterOutput').innerHTML = `
+                <div class="output-placeholder">
+                    <div class="output-placeholder-icon">🎨</div>
+                    <p>排版后的内容将显示在这里</p>
+                </div>
+            `;
+            document.getElementById('formatterStats').style.display = 'none';
+        }
+
+        // ==================== 标签生成器 ====================
+        const tagDatabase = {
+            生活方式: ['#生活记录', '#日常分享', '#生活方式', '#治愈系', '#慢生活', '#居家好物', '#生活美学', '#仪式感'],
+            美食探店: ['#美食', '#探店', '#吃货', '#美食分享', '#餐厅推荐', '#美食测评', '#宝藏餐厅', '#美食打卡'],
+            旅行出游: ['#旅行', '#旅游攻略', '#周末去哪儿', '#自驾游', '#小众景点', '#旅行日记', '#风景', '#打卡'],
+            时尚穿搭: ['#OOTD', '#穿搭', '#时尚', '#每日穿搭', '#搭配', '#街拍', '#时尚博主', '#穿搭分享'],
+            数码科技: ['#科技', '#数码', '#测评', '#黑科技', '#智能设备', '#科技改变生活', '#数码好物', '#科技资讯'],
+            职场成长: ['#职场', '#成长', '#自我提升', '#工作效率', '#职场干货', '#升职加薪', '#职业规划', '#学习']
+        };
+
+        let currentTags = [];
+
+        function updateTagSuggestions() {
+            const platform = document.getElementById('tagsPlatform').value;
+            const container = document.getElementById('suggestedTags');
+            
+            const suggestions = {
+                xiaohongshu: ['#生活记录', '#种草', '#探店', '#OOTD', '#美食', '#旅行', '#护肤', '#穿搭'],
+                douyin: ['#抖音小助手', '#上热门', '#原创', '#教程', '#生活', '#搞笑', '#美食', '#颜值'],
+                weibo: ['#微博公开课', '#新星v计划', '#超级红人节', '#VLOG', '#日常', '#摄影', '#美食', '#时尚'],
+                weixin: ['干货', '教程', '攻略', '指南', '方法', '技巧', '案例', '分析']
+            };
+            
+            container.innerHTML = (suggestions[platform] || suggestions.xiaohongshu)
+                .map(tag => `<span class="tag-item" onclick="addTag(this)">${tag}</span>`).join('');
+        }
+
+        function addTag(element) {
+            const input = document.getElementById('tagsKeywords');
+            const tag = element.textContent.replace('#', '');
+            const current = input.value.trim();
+            
+            if(!current.split(/\s+/).includes(tag)) {
+                input.value = current ? current + ' ' + tag : tag;
+                element.classList.add('copied');
+                setTimeout(() => element.classList.remove('copied'), 1000);
+            }
+        }
+
+        function generateTags() {
+            const keywords = document.getElementById('tagsKeywords').value.trim().split(/\s+/).filter(k => k);
+            const platform = document.getElementById('tagsPlatform').value;
+            
+            if(keywords.length === 0) {
+                showToast('请输入关键词', 'error');
+                return;
+            }
+
+            const field = document.querySelector('#tool-tags .option-chip.active')?.textContent || '生活方式';
+            const fieldTags = tagDatabase[field] || tagDatabase['生活方式'];
+            
+            // 生成标签组合
+            currentTags = [...keywords.map(k => `#${k}`)];
+            
+            // 添加领域标签
+            currentTags.push(...fieldTags.slice(0, 3));
+            
+            // 添加平台特定标签
+            const platformTags = {
+                xiaohongshu: ['#小红书', '#种草', '#干货分享'],
+                douyin: ['#抖音', '#上热门', '#原创'],
+                weibo: ['#微博', '#话题', '#热搜'],
+                weixin: ['公众号', '图文', '原创']
+            };
+            currentTags.push(...(platformTags[platform] || []).slice(0, 2));
+            
+            // 去重并限制数量
+            currentTags = [...new Set(currentTags)];
+            const limits = { xiaohongshu: 8, douyin: 5, weibo: 3, weixin: 5 };
+            currentTags = currentTags.slice(0, limits[platform] || 5);
+            
+            displayTags(currentTags, platform);
+        }
+
+        function displayTags(tags, platform) {
+            const output = document.getElementById('tagsOutput');
+            const isWeixin = platform === 'weixin';
+            
+            output.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+                        ${isWeixin ? '推荐关键词组合（适合公众号SEO）：' : '推荐标签组合（点击可复制）：'}
+                    </div>
+                    <div class="tag-cloud" style="margin: 0;">
+                        ${tags.map(tag => `
+                            <span class="tag-item" onclick="copyText('${tag.replace(/'/g, "\\'")}', this)" 
+                                  style="font-size: 16px; padding: 10px 20px;">
+                                ${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div style="background: var(--bg-secondary); padding: 16px; border-radius: var(--radius-md); font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+                    <strong style="color: var(--accent-primary);">💡 使用建议：</strong><br>
+                    ${getTagAdvice(platform)}
+                </div>
+            `;
+            
+            document.getElementById('tagsStats').style.display = 'flex';
+            document.getElementById('tagsCount').textContent = tags.length;
+            document.getElementById('tagsCoverage').textContent = platform === 'xiaohongshu' ? '生活+美妆+地域' : '垂直领域全覆盖';
+        }
+
+        function getTagAdvice(platform) {
+            const advice = {
+                xiaohongshu: '1. 前3个标签为核心关键词<br>2. 包含1-2个热门大标签<br>3. 添加1个精准细分标签<br>4. 避免使用违禁词和敏感词',
+                douyin: '1. 标签要精准匹配内容<br>2. 前3个标签权重最高<br>3. 可添加1个热门挑战标签<br>4. 避免标签堆砌',
+                weibo: '1. 话题标签要简洁有力<br>2. 选择热度适中的话题<br>3. 可创建原创话题<br>4. 注意话题的时效性',
+                weixin: '1. 关键词要自然融入标题和正文<br>2. 核心关键词出现3-5次<br>3. 长尾关键词布局在副标题<br>4. 避免关键词堆砌'
+            };
+            return advice[platform] || advice.xiaohongshu;
+        }
+
+        function copyAllTags() {
+            if(currentTags.length === 0) return;
+            const platform = document.getElementById('tagsPlatform').value;
+            const separator = platform === 'weixin' ? '、' : ' ';
+            copyText(currentTags.join(separator));
+        }
+
+        function shuffleTags() {
+            if(currentTags.length === 0) return;
+            currentTags.sort(() => Math.random() - 0.5);
+            generateTags(); // 重新显示
+        }
+
+        function clearTagsForm() {
+            document.getElementById('tagsKeywords').value = '';
+            document.getElementById('tagsOutput').innerHTML = `
+                <div class="output-placeholder">
+                    <div class="output-placeholder-icon">🏷️</div>
+                    <p>生成的标签组合将显示在这里</p>
+                </div>
+            `;
+            document.getElementById('tagsStats').style.display = 'none';
+        }
+
+        // 初始化历史记录
+        updateHistoryDisplay();
+        updateTagSuggestions();
+    </script>
+</body>
+</html>

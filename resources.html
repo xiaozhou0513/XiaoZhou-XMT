@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源工具箱 - 小粥新媒体</title>
+    <meta name="description" content="新媒体运营实用工具集合，提供平台尺寸规范、违规词检测、效率工具等功能，助力运营工作提效">
+    
+    <style>
+        :root {
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #16161f;
+            --bg-hover: #22222e;
+            --bg-elevated: #1e1e2d;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --accent-info: #3b82f6;
+            
+            --border-color: #2a2a35;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f5;
+            --bg-card: #ffffff;
+            --bg-hover: #f5f5fa;
+            --bg-elevated: #f8f8fc;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --accent-primary: #4f46e5;
+            --accent-secondary: #7c3aed;
+            --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --border-color: #e0e0e8;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+        }
+
+        [data-theme="sakura"] {
+            --bg-primary: #fdf2f8;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #fce7f3;
+            --bg-card: #ffffff;
+            --bg-hover: #fbcfe8;
+            --bg-elevated: #fff0f7;
+            --text-primary: #831843;
+            --text-secondary: #9d174d;
+            --text-muted: #be185d;
+            --accent-primary: #ec4899;
+            --accent-secondary: #f472b6;
+            --accent-gradient: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            --border-color: #fbcfe8;
+            --shadow-sm: 0 2px 8px rgba(236,72,153,0.1);
+            --shadow-md: 0 8px 24px rgba(236,72,153,0.15);
+            --shadow-lg: 0 16px 48px rgba(236,72,153,0.2);
+        }
+
+        [data-theme="forest"] {
+            --bg-primary: #f0fdf4;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #dcfce7;
+            --bg-card: #ffffff;
+            --bg-hover: #bbf7d0;
+            --bg-elevated: #f0fdf4;
+            --text-primary: #14532d;
+            --text-secondary: #166534;
+            --text-muted: #15803d;
+            --accent-primary: #22c55e;
+            --accent-secondary: #4ade80;
+            --accent-gradient: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+            --border-color: #bbf7d0;
+            --shadow-sm: 0 2px 8px rgba(34,197,94,0.1);
+            --shadow-md: 0 8px 24px rgba(34,197,94,0.15);
+            --shadow-lg: 0 16px 48px rgba(34,197,94,0.2);
+        }
+
+        [data-theme="ocean"] {
+            --bg-primary: #f0f9ff;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e0f2fe;
+            --bg-card: #ffffff;
+            --bg-hover: #bae6fd;
+            --bg-elevated: #f0f9ff;
+            --text-primary: #0c4a6e;
+            --text-secondary: #075985;
+            --text-muted: #0369a1;
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            --border-color: #bae6fd;
+            --shadow-sm: 0 2px 8px rgba(14,165,233,0.1);
+            --shadow-md: 0 8px 24px rgba(14,165,233,0.15);
+            --shadow-lg: 0 16px 48px rgba(14,165,233,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background var(--transition-base), color var(--transition-base);
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(var(--bg-secondary), 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            -webkit-text-fill-color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-switcher { position: relative; }
+        
+        .theme-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all var(--transition-fast);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            min-width: 180px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-base);
+        }
+
+        .theme-switcher:hover .theme-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-secondary);
+        }
+
+        .theme-option:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 主内容 */
+        .main-content { margin-top: 72px; min-height: calc(100vh - 72px); }
+
+        /* 页面头部 */
+        .page-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 48px;
+        }
+
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .breadcrumb a:hover { color: var(--accent-primary); }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 700px;
+        }
+
+        /* 工具网格 */
+        .tools-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 48px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-primary);
+        }
+
+        .tool-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .tool-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .tool-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .tool-body {
+            padding: 24px;
+        }
+
+        /* 尺寸规范工具 */
+        .size-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .size-tab {
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .size-tab:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .size-tab.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .size-content {
+            display: none;
+        }
+
+        .size-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .size-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .size-item:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.02);
+        }
+
+        .size-item.copied::after {
+            content: '已复制!';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--accent-success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .size-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .size-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
+        }
+
+        .size-ratio {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* 违规词检测 */
+        .detector-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.8;
+            resize: vertical;
+            font-family: inherit;
+            transition: all var(--transition-fast);
+        }
+
+        .detector-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .detector-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-success);
+        }
+
+        .detector-result.has-warning {
+            border-left-color: var(--accent-warning);
+        }
+
+        .detector-result.has-danger {
+            border-left-color: var(--accent-danger);
+        }
+
+        .result-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-safe { color: var(--accent-success); }
+        .result-warning { color: var(--accent-warning); }
+        .result-danger { color: var(--accent-danger); }
+
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .word-tag {
+            padding: 6px 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--accent-danger);
+        }
+
+        .word-tag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--accent-warning);
+        }
+
+        /* 效率工具 */
+        .timer-display {
+            font-size: 64px;
+            font-weight: 800;
+            text-align: center;
+            font-family: var(--font-mono);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 24px 0;
+            letter-spacing: 4px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .timer-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 14px;
+        }
+
+        .timer-btn.start {
+            background: var(--accent-success);
+            color: white;
+        }
+
+        .timer-btn.pause {
+            background: var(--accent-warning);
+            color: white;
+        }
+
+        .timer-btn.reset {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .timer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timer-presets {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .preset-btn {
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 13px;
+            transition: all var(--transition-fast);
+        }
+
+        .preset-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* 字符统计 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
+        }
+
+        /* 链接生成器 */
+        .link-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .link-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .link-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .link-output {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            word-break: break-all;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 48px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* 提示框 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform var(--transition-base);
+            z-index: 9999;
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background: var(--accent-success);
+        }
+
+        /* 响应式 */
+        @media (max-width: 968px) {
+            .navbar { padding: 0 24px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .page-header { padding: 30px 24px; }
+            .tools-container { padding: 24px; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .timer-display { font-size: 48px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">🥣</div>
+            <span>小粥新媒体</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="content-tools.html">内容创作</a></li>
+            <li><a href="data-analyzer.html">数据分析</a></li>
+            <li><a href="strategy-hub.html">运营策略</a></li>
+            <li><a href="calendar.html">内容日历</a></li>
+            <li><a href="resources.html" class="active">资源工具</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <div class="theme-switcher">
+                <button class="theme-btn" id="currentThemeBtn">🌙</button>
+                <div class="theme-dropdown">
+                    <div class="theme-option active" data-theme="dark" onclick="switchTheme('dark')">
+                        <div class="theme-dot" style="background: #1a1a2e;"></div>
+                        <span>深夜模式</span>
+                    </div>
+                    <div class="theme-option" data-theme="light" onclick="switchTheme('light')">
+                        <div class="theme-dot" style="background: #fafafa;"></div>
+                        <span>日间清晰</span>
+                    </div>
+                    <div class="theme-option" data-theme="sakura" onclick="switchTheme('sakura')">
+                        <div class="theme-dot" style="background: #fce7f3;"></div>
+                        <span>樱花粉韵</span>
+                    </div>
+                    <div class="theme-option" data-theme="forest" onclick="switchTheme('forest')">
+                        <div class="theme-dot" style="background: #dcfce7;"></div>
+                        <span>森林之境</span>
+                    </div>
+                    <div class="theme-option" data-theme="ocean" onclick="switchTheme('ocean')">
+                        <div class="theme-dot" style="background: #e0f2fe;"></div>
+                        <span>深海之蓝</span>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <!-- 页面头部 -->
+        <header class="page-header">
+            <div class="page-header-content">
+                <nav class="breadcrumb">
+                    <a href="index.html">首页</a>
+                    <span>/</span>
+                    <span>资源工具箱</span>
+                </nav>
+                <h1 class="page-title">
+                    <span>🧰</span>
+                    <span>资源工具箱</span>
+                </h1>
+                <p class="page-subtitle">
+                    新媒体运营实用工具集合，提供平台尺寸规范、违规词检测、效率工具等功能，即开即用提升工作效率
+                </p>
+            </div>
+        </header>
+
+        <!-- 工具容器 -->
+        <div class="tools-container">
+            <div class="tools-grid">
+                <!-- 工具1：平台尺寸规范 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">📐</div>
+                        <div>
+                            <div class="tool-title">平台尺寸规范</div>
+                            <div class="tool-desc">各平台图片/视频标准尺寸速查</div>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <div class="size-tabs">
+                            <button class="size-tab active" onclick="switchSizeTab('xiaohongshu')">小红书</button>
+                            <button class="size-tab" onclick="switchSizeTab('douyin')">抖音</button>
+                            <button class="size-tab" onclick="switchSizeTab('weixin')">公众号</button>
+                            <button class="size-tab" onclick="switchSizeTab('bilibili')">B站</button>
+                        </div>
+                        
+                        <div id="size-xiaohongshu" class="size-content active">
+                            <div class="size-grid">
+                                <div class="size-item" onclick="copySize(this, '1242×1660')">
+                                    <div class="size-name">图文笔记封面</div>
+                                    <div class="size-value">1242×1660</div>
+                                    <div class="size-ratio">3:4</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1080×1440')">
+                                    <div class="size-name">视频笔记封面</div>
+                                    <div class="size-value">1080×1440</div>
+                                    <div class="size-ratio">3:4</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1242×1242')">
+                                    <div class="size-name">正方形封面</div>
+                                    <div class="size-value">1242×1242</div>
+                                    <div class="size-ratio">1:1</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1080×1920')">
+                                    <div class="size-name">视频尺寸</div>
+                                    <div class="size-value">1080×1920</div>
+                                    <div class="size-ratio">9:16</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="size-douyin" class="size-content">
+                            <div class="size-grid">
+                                <div class="size-item" onclick="copySize(this, '1080×1920')">
+                                    <div class="size-name">竖版视频</div>
+                                    <div class="size-value">1080×1920</div>
+                                    <div class="size-ratio">9:16</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1920×1080')">
+                                    <div class="size-name">横版视频</div>
+                                    <div class="size-value">1920×1080</div>
+                                    <div class="size-ratio">16:9</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1080×1080')">
+                                    <div class="size-name">正方形视频</div>
+                                    <div class="size-value">1080×1080</div>
+                                    <div class="size-ratio">1:1</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1125×633')">
+                                    <div class="size-name">封面图</div>
+                                    <div class="size-value">1125×633</div>
+                                    <div class="size-ratio">16:9</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="size-weixin" class="size-content">
+                            <div class="size-grid">
+                                <div class="size-item" onclick="copySize(this, '900×383')">
+                                    <div class="size-name">公众号封面</div>
+                                    <div class="size-value">900×383</div>
+                                    <div class="size-ratio">2.35:1</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '500×500')">
+                                    <div class="size-name">次条封面</div>
+                                    <div class="size-value">500×500</div>
+                                    <div class="size-ratio">1:1</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1080×1920')">
+                                    <div class="size-name">视频号竖版</div>
+                                    <div class="size-value">1080×1920</div>
+                                    <div class="size-ratio">9:16</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '640×360')">
+                                    <div class="size-name">图文配图</div>
+                                    <div class="size-value">640×360</div>
+                                    <div class="size-ratio">16:9</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="size-bilibili" class="size-content">
+                            <div class="size-grid">
+                                <div class="size-item" onclick="copySize(this, '1920×1080')">
+                                    <div class="size-name">横版视频</div>
+                                    <div class="size-value">1920×1080</div>
+                                    <div class="size-ratio">16:9</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1080×1920')">
+                                    <div class="size-name">竖版视频</div>
+                                    <div class="size-value">1080×1920</div>
+                                    <div class="size-ratio">9:16</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '1146×717')">
+                                    <div class="size-name">视频封面</div>
+                                    <div class="size-value">1146×717</div>
+                                    <div class="size-ratio">16:10</div>
+                                </div>
+                                <div class="size-item" onclick="copySize(this, '960×600')">
+                                    <div class="size-name">专栏封面</div>
+                                    <div class="size-value">960×600</div>
+                                    <div class="size-ratio">16:10</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具2：违规词检测 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🛡️</div>
+                        <div>
+                            <div class="tool-title">违规词检测</div>
+                            <div class="tool-desc">智能识别敏感词与违规内容</div>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <textarea class="detector-input" id="detectorInput" placeholder="在此粘贴需要检测的文案内容...&#10;支持检测：极限词、敏感词、虚假宣传用语等"></textarea>
+                        <button class="btn btn-primary" onclick="detectWords()" style="margin-top: 12px;">
+                            <span>🔍</span>
+                            <span>开始检测</span>
+                        </button>
+                        
+                        <div id="detectorResult" class="detector-result" style="display: none;">
+                            <div class="result-title result-safe" id="resultTitle">
+                                <span>✅</span>
+                                <span>未检测到违规词</span>
+                            </div>
+                            <div id="resultDesc">您的文案内容符合平台规范，可以安全发布。</div>
+                            <div class="word-list" id="wordList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具3：专注计时器 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">⏱️</div>
+                        <div>
+                            <div class="tool-title">专注计时器</div>
+                            <div class="tool-desc">番茄工作法提升创作效率</div>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <div class="timer-display" id="timerDisplay">25:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start" id="timerBtn" onclick="toggleTimer()">开始专注</button>
+                            <button class="timer-btn reset" onclick="resetTimer()">重置</button>
+                        </div>
+                        <div class="timer-presets">
+                            <button class="preset-btn" onclick="setTimer(25)">🍅 番茄 25分钟</button>
+                            <button class="preset-btn" onclick="setTimer(45)">⏰ 深度 45分钟</button>
+                            <button class="preset-btn" onclick="setTimer(5)">☕ 休息 5分钟</button>
+                            <button class="preset-btn" onclick="setTimer(15)">🌿 短休 15分钟</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具4：字符统计 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">📊</div>
+                        <div>
+                            <div class="tool-title">字符统计</div>
+                            <div class="tool-desc">实时统计字数、段落、阅读时长</div>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <textarea class="detector-input" id="statsInput" placeholder="在此输入或粘贴文本内容..." oninput="updateStats()"></textarea>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <div class="stat-label">总字数</div>
+                                <div class="stat-number" id="totalChars">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">段落数</div>
+                                <div class="stat-number" id="totalParas">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">预估阅读</div>
+                                <div class="stat-number" id="readTime">0秒</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具5：短链生成器 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔗</div>
+                        <div>
+                            <div class="tool-title">短链生成器</div>
+                            <div class="tool-desc">生成简洁的推广链接</div>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <div class="link-input-group">
+                            <input type="text" class="link-input" id="longUrl" placeholder="输入长链接...">
+                            <button class="btn btn-primary btn-small" onclick="generateShortLink()" style="width: auto;">生成</button>
+                        </div>
+                        <div id="shortLinkResult" style="display: none;">
+                            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">生成的短链接：</div>
+                            <div class="link-output" id="shortLinkOutput">
+                                <span id="shortLinkText"></span>
+                                <button class="copy-btn" onclick="copyShortLink()">复制</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具6：颜色转换器 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🎨</div>
+                        <div>
+                            <div class="tool-title">颜色转换器</div>
+                            <div class="tool-desc">HEX/RGB/HSB 互转工具</div>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <div class="link-input-group">
+                            <input type="text" class="link-input" id="colorInput" placeholder="#6366F1 或 rgb(99, 102, 241)" oninput="convertColor()">
+                            <div id="colorPreview" style="width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--bg-tertiary); border: 1px solid var(--border-color);"></div>
+                        </div>
+                        <div id="colorResult" style="margin-top: 16px; display: none;">
+                            <div class="size-grid" style="margin-top: 0;">
+                                <div class="size-item" onclick="copyText(this.querySelector('.size-value').textContent)">
+                                    <div class="size-name">HEX</div>
+                                    <div class="size-value" id="hexValue">-</div>
+                                </div>
+                                <div class="size-item" onclick="copyText(this.querySelector('.size-value').textContent)">
+                                    <div class="size-name">RGB</div>
+                                    <div class="size-value" id="rgbValue">-</div>
+                                </div>
+                                <div class="size-item" onclick="copyText(this.querySelector('.size-value').textContent)">
+                                    <div class="size-name">HSB</div>
+                                    <div class="size-value" id="hsbValue">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2026 小粥新媒体 | 资源工具箱 | 仅供学习交流使用</p>
+            <p style="margin-top: 8px; font-size: 12px;">工具生成结果仅供参考，请以实际平台规则为准</p>
+        </div>
+    </footer>
+
+    <!-- 提示框 -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // ==================== 主题系统 ====================
+        function switchTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            const icons = { dark: '🌙', light: '☀️', sakura: '🌸', forest: '🌲', ocean: '🌊' };
+            document.getElementById('currentThemeBtn').textContent = icons[theme];
+            
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+                if(opt.dataset.theme === theme) opt.classList.add('active');
+            });
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        switchTheme(savedTheme);
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==================== 尺寸规范工具 ====================
+        function switchSizeTab(platform) {
+            document.querySelectorAll('.size-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.size-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`size-${platform}`).classList.add('active');
+        }
+
+        function copySize(element, size) {
+            navigator.clipboard.writeText(size).then(() => {
+                element.classList.add('copied');
+                showToast(`已复制 ${size}`);
+                setTimeout(() => element.classList.remove('copied'), 2000);
+            });
+        }
+
+        // ==================== 违规词检测 ====================
+        const sensitiveWords = {
+            danger: ['最', '第一', '顶级', '国家级', '最佳', '最大', '唯一', '绝对', '永久', '万能', '特效', '神效', '根治', '纯天然', '100%', '零风险', '保过', '包过', '稳赚', '暴富'],
+            warning: ['第一', '首选', '独家', '首发', '首席', '领袖', '领先', '王者', '冠军', '极致', '极品', '绝佳', '终极', '绝对', '空前', '绝后', '万能', '全能', '神器']
+        };
+
+        function detectWords() {
+            const text = document.getElementById('detectorInput').value;
+            const resultDiv = document.getElementById('detectorResult');
+            const titleDiv = document.getElementById('resultTitle');
+            const descDiv = document.getElementById('resultDesc');
+            const wordList = document.getElementById('wordList');
+            
+            if(!text) {
+                showToast('请输入需要检测的文案');
+                return;
+            }
+            
+            const foundDanger = [];
+            const foundWarning = [];
+            
+            sensitiveWords.danger.forEach(word => {
+                if(text.includes(word)) foundDanger.push(word);
+            });
+            
+            sensitiveWords.warning.forEach(word => {
+                if(text.includes(word) && !foundDanger.includes(word)) foundWarning.push(word);
+            });
+            
+            resultDiv.style.display = 'block';
+            wordList.innerHTML = '';
+            
+            if(foundDanger.length > 0) {
+                resultDiv.className = 'detector-result has-danger';
+                titleDiv.className = 'result-title result-danger';
+                titleDiv.innerHTML = '<span>❌</span><span>检测到高危违规词</span>';
+                descDiv.textContent = `发现 ${foundDanger.length} 个高危违规词，建议立即修改后再发布。`;
+                
+                foundDanger.forEach(word => {
+                    const tag = document.createElement('span');
+                    tag.className = 'word-tag';
+                    tag.textContent = word;
+                    wordList.appendChild(tag);
+                });
+            } else if(foundWarning.length > 0) {
+                resultDiv.className = 'detector-result has-warning';
+                titleDiv.className = 'result-title result-warning';
+                titleDiv.innerHTML = '<span>⚠️</span><span>检测到潜在风险词</span>';
+                descDiv.textContent = `发现 ${foundWarning.length} 个潜在风险词，建议谨慎使用或替换。`;
+                
+                foundWarning.forEach(word => {
+                    const tag = document.createElement('span');
+                    tag.className = 'word-tag warning';
+                    tag.textContent = word;
+                    wordList.appendChild(tag);
+                });
+            } else {
+                resultDiv.className = 'detector-result';
+                titleDiv.className = 'result-title result-safe';
+                titleDiv.innerHTML = '<span>✅</span><span>未检测到违规词</span>';
+                descDiv.textContent = '您的文案内容符合平台规范，可以安全发布。';
+            }
+        }
+
+        // ==================== 专注计时器 ====================
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timerBtn');
+            
+            if(isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                btn.textContent = '继续专注';
+                btn.className = 'timer-btn start';
+            } else {
+                isRunning = true;
+                btn.textContent = '暂停';
+                btn.className = 'timer-btn pause';
+                
+                timerInterval = setInterval(() => {
+                    if(timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        btn.textContent = '开始专注';
+                        btn.className = 'timer-btn start';
+                        showToast('专注时间结束！休息一下吧');
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            updateTimerDisplay();
+            document.getElementById('timerBtn').textContent = '开始专注';
+            document.getElementById('timerBtn').className = 'timer-btn start';
+        }
+
+        function setTimer(minutes) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeLeft = minutes * 60;
+            updateTimerDisplay();
+            document.getElementById('timerBtn').textContent = '开始专注';
+            document.getElementById('timerBtn').className = 'timer-btn start';
+            showToast(`已设置 ${minutes} 分钟`);
+        }
+
+        // ==================== 字符统计 ====================
+        function updateStats() {
+            const text = document.getElementById('statsInput').value;
+            
+            // 字数统计（去除空格）
+            const chars = text.replace(/\s/g, '').length;
+            document.getElementById('totalChars').textContent = chars.toLocaleString();
+            
+            // 段落统计
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim()).length;
+            document.getElementById('totalParas').textContent = paragraphs;
+            
+            // 阅读时长（按300字/分钟计算）
+            const minutes = Math.ceil(chars / 300);
+            let timeText;
+            if(minutes < 1) {
+                timeText = '1分钟内';
+            } else if(minutes < 60) {
+                timeText = `${minutes}分钟`;
+            } else {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                timeText = `${hours}小时${mins > 0 ? mins + '分' : ''}`;
+            }
+            document.getElementById('readTime').textContent = timeText;
+        }
+
+        // ==================== 短链生成器 ====================
+        function generateShortLink() {
+            const longUrl = document.getElementById('longUrl').value.trim();
+            
+            if(!longUrl) {
+                showToast('请输入链接');
+                return;
+            }
+            
+            if(!longUrl.startsWith('http')) {
+                showToast('请输入有效的URL');
+                return;
+            }
+            
+            // 模拟短链生成（实际应调用API）
+            const shortCode = Math.random().toString(36).substring(2, 8);
+            const shortUrl = `https://xzhou.cn/${shortCode}`;
+            
+            document.getElementById('shortLinkResult').style.display = 'block';
+            document.getElementById('shortLinkText').textContent = shortUrl;
+        }
+
+        function copyShortLink() {
+            const text = document.getElementById('shortLinkText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('短链接已复制');
+            });
+        }
+
+        // ==================== 颜色转换器 ====================
+        function convertColor() {
+            const input = document.getElementById('colorInput').value.trim();
+            const preview = document.getElementById('colorPreview');
+            const result = document.getElementById('colorResult');
+            
+            if(!input) {
+                result.style.display = 'none';
+                preview.style.background = 'var(--bg-tertiary)';
+                return;
+            }
+            
+            let r, g, b;
+            
+            // 解析HEX
+            if(input.startsWith('#')) {
+                const hex = input.replace('#', '');
+                if(hex.length === 6) {
+                    r = parseInt(hex.substr(0, 2), 16);
+                    g = parseInt(hex.substr(2, 2), 16);
+                    b = parseInt(hex.substr(4, 2), 16);
+                }
+            }
+            // 解析RGB
+            else if(input.startsWith('rgb')) {
+                const match = input.match(/\d+/g);
+                if(match && match.length >= 3) {
+                    r = parseInt(match[0]);
+                    g = parseInt(match[1]);
+                    b = parseInt(match[2]);
+                }
+            }
+            
+            if(r !== undefined && !isNaN(r)) {
+                preview.style.background = `rgb(${r}, ${g}, ${b})`;
+                result.style.display = 'block';
+                
+                const hex = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase();
+                document.getElementById('hexValue').textContent = hex;
+                document.getElementById('rgbValue').textContent = `rgb(${r}, ${g}, ${b})`;
+                
+                // 计算HSB
+                const max = Math.max(r, g, b) / 255;
+                const min = Math.min(r, g, b) / 255;
+                const d = max - min;
+                const s = max === 0 ? 0 : d / max;
+                const b_val = max;
+                let h = 0;
+                
+                if(d !== 0) {
+                    switch(max) {
+                        case r/255: h = ((g/255 - b/255) / d + (g < b ? 6 : 0)) / 6; break;
+                        case g/255: h = ((b/255 - r/255) / d + 2) / 6; break;
+                        case b/255: h = ((r/255 - g/255) / d + 4) / 6; break;
+                    }
+                }
+                
+                document.getElementById('hsbValue').textContent = 
+                    `hsb(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(b_val * 100)}%)`;
+            }
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已复制到剪贴板');
+            });
+        }
+    </script>
+</body>
+</html>

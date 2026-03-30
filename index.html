@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小粥新媒体 - 专业新媒体运营服务平台</title>
+    <meta name="description" content="小粥新媒体提供新媒体内容创作、运营技巧分享等非经营性信息展示服务，助力内容创作者提升运营效率">
+    <style>
+        :root {
+            /* 基础变量 */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            
+            /* 默认深色主题 */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #16161f;
+            --bg-hover: #22222e;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            
+            --border-color: #2a2a35;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* 日间主题 */
+        [data-theme="light"] {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f5;
+            --bg-card: #ffffff;
+            --bg-hover: #f5f5fa;
+            
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            
+            --accent-primary: #4f46e5;
+            --accent-secondary: #7c3aed;
+            --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            
+            --border-color: #e0e0e8;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+        }
+
+        /* 樱花主题 */
+        [data-theme="sakura"] {
+            --bg-primary: #fdf2f8;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #fce7f3;
+            --bg-card: #ffffff;
+            --bg-hover: #fbcfe8;
+            
+            --text-primary: #831843;
+            --text-secondary: #9d174d;
+            --text-muted: #be185d;
+            
+            --accent-primary: #ec4899;
+            --accent-secondary: #f472b6;
+            --accent-gradient: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            
+            --border-color: #fbcfe8;
+            --shadow-sm: 0 2px 8px rgba(236,72,153,0.1);
+            --shadow-md: 0 8px 24px rgba(236,72,153,0.15);
+            --shadow-lg: 0 16px 48px rgba(236,72,153,0.2);
+        }
+
+        /* 森林主题 */
+        [data-theme="forest"] {
+            --bg-primary: #f0fdf4;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #dcfce7;
+            --bg-card: #ffffff;
+            --bg-hover: #bbf7d0;
+            
+            --text-primary: #14532d;
+            --text-secondary: #166534;
+            --text-muted: #15803d;
+            
+            --accent-primary: #22c55e;
+            --accent-secondary: #4ade80;
+            --accent-gradient: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+            
+            --border-color: #bbf7d0;
+            --shadow-sm: 0 2px 8px rgba(34,197,94,0.1);
+            --shadow-md: 0 8px 24px rgba(34,197,94,0.15);
+            --shadow-lg: 0 16px 48px rgba(34,197,94,0.2);
+        }
+
+        /* 海洋主题 */
+        [data-theme="ocean"] {
+            --bg-primary: #f0f9ff;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e0f2fe;
+            --bg-card: #ffffff;
+            --bg-hover: #bae6fd;
+            
+            --text-primary: #0c4a6e;
+            --text-secondary: #075985;
+            --text-muted: #0369a1;
+            
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            
+            --border-color: #bae6fd;
+            --shadow-sm: 0 2px 8px rgba(14,165,233,0.1);
+            --shadow-md: 0 8px 24px rgba(14,165,233,0.15);
+            --shadow-lg: 0 16px 48px rgba(14,165,233,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background var(--transition-base), color var(--transition-base);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(var(--bg-secondary), 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            transition: all var(--transition-base);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            -webkit-text-fill-color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* 主题切换器 */
+        .theme-switcher {
+            position: relative;
+        }
+
+        .theme-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            font-size: 20px;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            min-width: 180px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-base);
+        }
+
+        .theme-switcher:hover .theme-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-secondary);
+        }
+
+        .theme-option:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            margin-top: 72px;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.05; }
+            50% { transform: scale(1.1); opacity: 0.08; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--accent-primary);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-primary);
+        }
+
+        /* 功能卡片网格 */
+        .features-section {
+            padding: 60px 48px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform var(--transition-base);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            transition: all var(--transition-base);
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--accent-gradient);
+            transform: scale(1.1);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .feature-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* 实时预览区 */
+        .preview-section {
+            padding: 60px 48px;
+            background: var(--bg-secondary);
+            margin: 40px 0;
+        }
+
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .preview-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .preview-tab {
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-secondary);
+            font-weight: 500;
+            border: none;
+            background: transparent;
+        }
+
+        .preview-tab.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .preview-tab:hover:not(.active) {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .preview-content {
+            min-height: 300px;
+        }
+
+        .tool-interface {
+            display: none;
+        }
+
+        .tool-interface.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 输入框样式 */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all var(--transition-fast);
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: var(--text-muted);
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* 输出框 */
+        .output-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .output-box.empty::after {
+            content: '生成结果将显示在这里...';
+            color: var(--text-muted);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 48px 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 968px) {
+            .navbar {
+                padding: 0 24px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: 60px 24px;
+            }
+            .features-section {
+                padding: 40px 24px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 提示信息 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform var(--transition-base);
+            z-index: 9999;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* 移动端菜单 */
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <div class="logo-icon">🥣</div>
+            <span>小粥新媒体</span>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">首页</a></li>
+            <li><a href="content-tools.html">内容创作</a></li>
+            <li><a href="data-analyzer.html">数据分析</a></li>
+            <li><a href="strategy-hub.html">运营策略</a></li>
+            <li><a href="calendar.html">内容日历</a></li>
+            <li><a href="resources.html">资源工具</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <div class="theme-switcher">
+                <button class="theme-btn" id="currentThemeBtn">🌙</button>
+                <div class="theme-dropdown">
+                    <div class="theme-option active" data-theme="dark" onclick="switchTheme('dark')">
+                        <div class="theme-dot" style="background: #1a1a2e;"></div>
+                        <span>深夜模式</span>
+                    </div>
+                    <div class="theme-option" data-theme="light" onclick="switchTheme('light')">
+                        <div class="theme-dot" style="background: #fafafa;"></div>
+                        <span>日间清晰</span>
+                    </div>
+                    <div class="theme-option" data-theme="sakura" onclick="switchTheme('sakura')">
+                        <div class="theme-dot" style="background: #fce7f3;"></div>
+                        <span>樱花粉韵</span>
+                    </div>
+                    <div class="theme-option" data-theme="forest" onclick="switchTheme('forest')">
+                        <div class="theme-dot" style="background: #dcfce7;"></div>
+                        <span>森林之境</span>
+                    </div>
+                    <div class="theme-option" data-theme="ocean" onclick="switchTheme('ocean')">
+                        <div class="theme-dot" style="background: #e0f2fe;"></div>
+                        <span>深海之蓝</span>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>✨</span>
+                    <span>专业新媒体运营服务平台</span>
+                </div>
+                <h1>让内容创作更<span>简单高效</span></h1>
+                <p>小粥新媒体提供全方位的新媒体运营工具与策略指导，助力创作者提升内容质量与运营效率，实现从零到一的成长突破</p>
+                <div class="hero-cta">
+                    <a href="#tools" class="btn btn-primary">
+                        <span>🚀</span>
+                        <span>开始使用工具</span>
+                    </a>
+                    <a href="strategy-hub.html" class="btn btn-secondary">
+                        <span>📚</span>
+                        <span>查看运营策略</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能展示 -->
+        <section class="features-section" id="tools">
+            <div class="section-header">
+                <h2>六大核心运营工具</h2>
+                <p>全部功能均可免费使用，助力您的新媒体运营之路</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" onclick="location.href='content-tools.html'">
+                    <div class="feature-icon">✍️</div>
+                    <h3>智能标题生成器</h3>
+                    <p>基于大数据分析的爆款标题生成工具，支持多平台适配，一键生成高点击率标题</p>
+                    <div class="feature-tags">
+                        <span class="tag">AI生成</span>
+                        <span class="tag">多平台</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" onclick="location.href='calendar.html'">
+                    <div class="feature-icon">📅</div>
+                    <h3>内容日历管理</h3>
+                    <p>可视化的内容发布计划管理工具，支持拖拽排序、多平台同步、发布提醒等功能</p>
+                    <div class="feature-tags">
+                        <span class="tag">可视化</span>
+                        <span class="tag">计划管理</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" onclick="location.href='data-analyzer.html'">
+                    <div class="feature-icon">📊</div>
+                    <h3>数据分析模拟器</h3>
+                    <p>模拟真实数据场景，提供粉丝增长、互动率、转化率等多维度数据分析与优化建议</p>
+                    <div class="feature-tags">
+                        <span class="tag">数据可视化</span>
+                        <span class="tag">趋势分析</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" onclick="location.href='content-tools.html#tags'">
+                    <div class="feature-icon">🏷️</div>
+                    <h3>标签话题生成器</h3>
+                    <p>智能推荐热门标签与话题组合，支持抖音、小红书、微博等多平台标签策略</p>
+                    <div class="feature-tags">
+                        <span class="tag">热门推荐</span>
+                        <span class="tag">SEO优化</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" onclick="location.href='content-tools.html#format'">
+                    <div class="feature-icon">🎨</div>
+                    <h3>文案排版美化器</h3>
+                    <p>一键优化文案格式，自动添加emoji、调整段落间距、生成精美排版样式</p>
+                    <div class="feature-tags">
+                        <span class="tag">自动排版</span>
+                        <span class="tag">美化工具</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" onclick="location.href='strategy-hub.html'">
+                    <div class="feature-icon">🎯</div>
+                    <h3>运营策略生成器</h3>
+                    <p>根据行业特点与目标受众，智能生成定制化的内容运营策略与执行方案</p>
+                    <div class="feature-tags">
+                        <span class="tag">策略指导</span>
+                        <span class="tag">行业定制</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 实时预览区 -->
+        <section class="preview-section">
+            <div class="preview-container">
+                <h2 style="margin-bottom: 24px; font-size: 28px;">🛠️ 快速体验工具</h2>
+                
+                <div class="preview-tabs">
+                    <button class="preview-tab active" onclick="switchTool('headline')">标题生成</button>
+                    <button class="preview-tab" onclick="switchTool('tags')">标签生成</button>
+                    <button class="preview-tab" onclick="switchTool('format')">排版美化</button>
+                </div>
+
+                <!-- 标题生成器 -->
+                <div id="tool-headline" class="tool-interface active">
+                    <div class="input-group">
+                        <label>输入内容主题</label>
+                        <input type="text" class="input-field" id="headlineInput" placeholder="例如：新媒体运营技巧、美食探店、旅行攻略...">
+                    </div>
+                    <div class="input-group">
+                        <label>选择平台</label>
+                        <select class="input-field" id="headlinePlatform">
+                            <option value="xiaohongshu">小红书</option>
+                            <option value="douyin">抖音</option>
+                            <option value="weixin">微信公众号</option>
+                            <option value="weibo">微博</option>
+                            <option value="bilibili">B站</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateHeadlines()">
+                        <span>✨</span>
+                        <span>生成爆款标题</span>
+                    </button>
+                    <div class="output-box empty" id="headlineOutput"></div>
+                </div>
+
+                <!-- 标签生成器 -->
+                <div id="tool-tags" class="tool-interface">
+                    <div class="input-group">
+                        <label>输入内容关键词</label>
+                        <input type="text" class="input-field" id="tagsInput" placeholder="多个关键词用空格分隔，例如：咖啡 探店 周末">
+                    </div>
+                    <div class="input-group">
+                        <label>选择平台</label>
+                        <select class="input-field" id="tagsPlatform">
+                            <option value="xiaohongshu">小红书</option>
+                            <option value="douyin">抖音</option>
+                            <option value="weibo">微博</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateTags()">
+                        <span>🏷️</span>
+                        <span>生成标签组合</span>
+                    </button>
+                    <div class="output-box empty" id="tagsOutput"></div>
+                </div>
+
+                <!-- 排版美化 -->
+                <div id="tool-format" class="tool-interface">
+                    <div class="input-group">
+                        <label>输入原始文案</label>
+                        <textarea class="input-field" id="formatInput" placeholder="粘贴您需要排版的文案内容..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="beautifyText()">
+                        <span>🎨</span>
+                        <span>一键美化排版</span>
+                    </button>
+                    <div class="output-box empty" id="formatOutput"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🥣 小粥新媒体</h3>
+                <p>致力于为新媒体创作者提供专业、实用的运营工具与策略指导，助力每一位创作者实现内容价值的最大化。</p>
+                <p style="font-size: 14px; color: var(--text-muted); margin-top: 16px;">
+                    免责声明：本平台仅提供新媒体运营相关信息咨询服务，所有内容仅供参考学习使用。
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>功能导航</h4>
+                <ul>
+                    <li><a href="content-tools.html">内容创作</a></li>
+                    <li><a href="data-analyzer.html">数据分析</a></li>
+                    <li><a href="strategy-hub.html">运营策略</a></li>
+                    <li><a href="calendar.html">内容日历</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>关于我们</h4>
+                <ul>
+                    <li><a href="about.html">平台介绍</a></li>
+                    <li><a href="about.html#contact">联系方式</a></li>
+                    <li><a href="about.html#privacy">隐私政策</a></li>
+                    <li><a href="about.html#terms">使用条款</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>友情链接</h4>
+                <ul>
+                    <li><a href="https://www.xiaohongshu.com" target="_blank">小红书</a></li>
+                    <li><a href="https://www.douyin.com" target="_blank">抖音</a></li>
+                    <li><a href="https://weixin.qq.com" target="_blank">微信</a></li>
+                    <li><a href="https://weibo.com" target="_blank">微博</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 小粥新媒体 | 仅供学习交流使用 | 非经营性网站</p>
+        </div>
+    </footer>
+
+    <!-- 提示框 -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // 主题切换系统
+        function switchTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // 更新按钮图标
+            const icons = {
+                dark: '🌙',
+                light: '☀️',
+                sakura: '🌸',
+                forest: '🌲',
+                ocean: '🌊'
+            };
+            document.getElementById('currentThemeBtn').textContent = icons[theme];
+            
+            // 更新下拉菜单激活状态
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+                if(opt.dataset.theme === theme) opt.classList.add('active');
+            });
+            
+            showToast(`已切换至${document.querySelector(`.theme-option[data-theme="${theme}"] span`).textContent}`);
+        }
+
+        // 初始化主题
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        switchTheme(savedTheme);
+
+        // 工具切换
+        function switchTool(tool) {
+            document.querySelectorAll('.preview-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tool-interface').forEach(iface => iface.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`tool-${tool}`).classList.add('active');
+        }
+
+        // 标题生成器（可实际使用）
+        function generateHeadlines() {
+            const topic = document.getElementById('headlineInput').value;
+            const platform = document.getElementById('headlinePlatform').value;
+            const output = document.getElementById('headlineOutput');
+            
+            if(!topic) {
+                showToast('请输入内容主题');
+                return;
+            }
+            
+            output.classList.remove('empty');
+            output.innerHTML = '<div class="loading"></div> 正在生成...';
+            
+            setTimeout(() => {
+                const templates = {
+                    xiaohongshu: [
+                        `🔥${topic} | 99%的人都不知道的秘诀`,
+                        `✨${topic}攻略，建议收藏！`,
+                        `💡${topic}，这样做效果翻倍`,
+                        `🎯亲测有效！${topic}实战经验`,
+                        `📚${topic}入门到精通，一篇就够`
+                    ],
+                    douyin: [
+                        `${topic}，原来这么简单！`,
+                        `3秒学会${topic}，太实用了🔥`,
+                        `${topic}的正确打开方式✅`,
+                        `别再做错了！${topic}避坑指南`,
+                        `${topic}，学会这招粉丝暴涨`
+                    ],
+                    weixin: [
+                        `${topic}：从0到1的完整指南`,
+                        `深度解析：${topic}的核心方法论`,
+                        `${topic} | 2026年最新趋势与策略`,
+                        `干货收藏：${topic}的10个关键技巧`,
+                        `为什么你的${topic}总是做不好？`
+                    ],
+                    weibo: [
+                        `#${topic}# 这个话题必须聊聊`,
+                        `【干货】${topic}实用技巧汇总`,
+                        `${topic}，你觉得最难的是什么？`,
+                        `转发收藏！${topic}完整攻略`,
+                        `${topic} | 网友经验分享合集`
+                    ],
+                    bilibili: [
+                        `【保姆级教程】${topic}零基础入门`,
+                        `${topic}，看这一篇就够了！`,
+                        `耗时100小时整理的${topic}指南`,
+                        `${topic}避坑指南，新手必看`,
+                        `从入门到放弃？${topic}正确学习路径`
+                    ]
+                };
+                
+                const headlines = templates[platform] || templates.xiaohongshu;
+                output.innerHTML = headlines.map((h, i) => `
+                    <div style="padding: 12px; margin-bottom: 8px; background: var(--bg-secondary); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s;" 
+                         onmouseover="this.style.background='var(--accent-primary)'; this.style.color='white'" 
+                         onmouseout="this.style.background='var(--bg-secondary)'; this.style.color='inherit'"
+                         onclick="copyToClipboard('${h.replace(/'/g, "\\'")}')">
+                        ${i+1}. ${h}
+                    </div>
+                `).join('');
+                
+                showToast('生成完成！点击标题可复制');
+            }, 800);
+        }
+
+        // 标签生成器
+        function generateTags() {
+            const keywords = document.getElementById('tagsInput').value.split(/\s+/).filter(k => k);
+            const platform = document.getElementById('tagsPlatform').value;
+            const output = document.getElementById('tagsOutput');
+            
+            if(keywords.length === 0) {
+                showToast('请输入关键词');
+                return;
+            }
+            
+            output.classList.remove('empty');
+            output.innerHTML = '<div class="loading"></div> 正在分析...';
+            
+            setTimeout(() => {
+                const commonTags = {
+                    xiaohongshu: ['#生活记录', '#干货分享', '#种草', '#探店', '#OOTD', '#美食', '#旅行', '#护肤', '#穿搭', '#家居'],
+                    douyin: ['#抖音小助手', '#上热门', '#原创', '#教程', '#生活', '#搞笑', '#美食', '#颜值', '#知识分享', '#正能量'],
+                    weibo: ['#微博公开课', '#新星v计划', '#超级红人节', '#VLOG', '#日常', '#摄影', '#美食', '#时尚', '#科技', '#娱乐']
+                };
+                
+                const tags = [...keywords.map(k => `#${k}`), ...commonTags[platform].slice(0, 5)];
+                const shuffled = tags.sort(() => 0.5 - Math.random());
+                
+                output.innerHTML = `
+                    <div style="margin-bottom: 16px;">
+                        <strong style="color: var(--accent-primary);">推荐标签组合：</strong>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                        ${shuffled.map(tag => `
+                            <span style="padding: 8px 16px; background: var(--accent-primary); color: white; border-radius: 100px; font-size: 14px; cursor: pointer;" 
+                                  onclick="copyToClipboard('${tag}')">${tag}</span>
+                        `).join('')}
+                    </div>
+                    <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-md); font-size: 14px; color: var(--text-secondary);">
+                        💡 提示：点击标签可直接复制，建议根据实际内容选择5-8个最相关的标签
+                    </div>
+                `;
+                
+                showToast('标签生成完成！');
+            }, 600);
+        }
+
+        // 排版美化
+        function beautifyText() {
+            const text = document.getElementById('formatInput').value;
+            const output = document.getElementById('formatOutput');
+            
+            if(!text) {
+                showToast('请输入需要排版的文案');
+                return;
+            }
+            
+            output.classList.remove('empty');
+            
+            // 实际排版处理逻辑
+            let formatted = text
+                .replace(/([。！？])/g, '$1\n\n')
+                .replace(/^(.+)$/gm, '✨ $1')
+                .replace(/\n{3,}/g, '\n\n');
+            
+            // 添加emoji装饰
+            const emojis = ['📌', '💡', '🔥', '✅', '⭐', '📍', '💎', '🎯'];
+            const lines = formatted.split('\n').filter(l => l.trim());
+            const decorated = lines.map((line, i) => {
+                if(line.trim() && i % 3 === 0) {
+                    return `${emojis[i % emojis.length]} ${line}`;
+                }
+                return line;
+            }).join('\n\n');
+            
+            output.innerHTML = `
+                <div style="white-space: pre-wrap; line-height: 2; font-size: 16px;">
+                    ${decorated}
+                </div>
+                <button class="btn btn-secondary" style="margin-top: 16px;" onclick="copyToClipboard(document.getElementById('formatOutput').querySelector('div').innerText)">
+                    <span>📋</span>
+                    <span>复制排版结果</span>
+                </button>
+            `;
+            
+            showToast('排版完成！');
+        }
+
+        // 复制功能
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已复制到剪贴板！');
+            }).catch(() => {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('已复制到剪贴板！');
+            });
+        }
+
+        // 提示框
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
