@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于我们 - 小粥新媒体</title>
-    <meta name="description" content="了解小粥新媒体平台，我们致力于为新媒体创作者提供专业的运营工具与策略指导，助力内容创作与运营效率提升">
+    <title>关于我们 - 小粥新媒体运营</title>
+    <meta name="description" content="了解小粥新媒体运营平台，长丰县水湖镇小周新媒体信息咨询服务部旗下品牌，致力于为新媒体创作者提供专业的运营工具与策略指导">
     
     <!-- 引入 QRCode 库用于生成二维码 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -143,7 +143,7 @@
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
 
-        /* 导航栏 */
+        /* 导航栏 - 删除LOGO后的优化样式 */
         .navbar {
             position: fixed;
             top: 0;
@@ -160,10 +160,8 @@
             padding: 0 48px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        /* 品牌文字样式 - 替代原LOGO */
+        .brand-text {
             font-size: 24px;
             font-weight: 800;
             background: var(--accent-gradient);
@@ -171,18 +169,7 @@
             -webkit-text-fill-color: transparent;
             cursor: pointer;
             text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-gradient);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            -webkit-text-fill-color: white;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
@@ -314,7 +301,7 @@
         /* 主内容 */
         .main-content { margin-top: 72px; min-height: calc(100vh - 72px); }
 
-        /* 页面头部 */
+        /* 页面头部 - 优化标题展示 */
         .page-header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
@@ -323,7 +310,7 @@
         }
 
         .page-header-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -345,16 +332,47 @@
 
         .breadcrumb a:hover { color: var(--accent-primary); }
 
+        /* 主标题样式 - 加大加粗 */
         .page-title {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 16px;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
+        /* 副标题样式 - 清晰可见 */
         .page-subtitle {
             color: var(--text-secondary);
-            font-size: 18px;
+            font-size: 20px;
             line-height: 1.8;
+            font-weight: 500;
+        }
+
+        /* 备案信息展示区 - 新增 */
+        .beian-showcase {
+            margin-top: 32px;
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            display: inline-flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .beian-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .beian-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
         }
 
         /* 内容容器 */
@@ -820,11 +838,11 @@
             background: var(--accent-success);
         }
 
-        /* 页脚 */
+        /* 页脚 - 优化备案信息展示 */
         .footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-color);
-            padding: 40px 48px;
+            padding: 48px;
             margin-top: 60px;
         }
 
@@ -832,15 +850,97 @@
             max-width: 1000px;
             margin: 0 auto;
             text-align: center;
+        }
+
+        /* 品牌与备案主体关系说明 - 新增 */
+        .brand-relationship {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            display: inline-block;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .brand-arrow {
+            font-size: 20px;
             color: var(--text-muted);
+            margin: 8px 0;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .relationship-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* 备案信息区域 - 中央展示 */
+        .beian-section {
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .beian-title {
             font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .beian-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--accent-primary);
+            border-radius: var(--radius-md);
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            transition: all var(--transition-base);
+        }
+
+        .beian-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        }
+
+        .beian-link::before {
+            content: '🔒';
+            font-size: 24px;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 24px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
         }
 
@@ -854,29 +954,43 @@
             color: var(--accent-primary);
         }
 
+        .copyright {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 24px;
+        }
+
+        .disclaimer {
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
         /* 响应式 */
         @media (max-width: 768px) {
             .navbar { padding: 0 24px; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: flex; }
             .page-header { padding: 40px 24px; }
-            .page-title { font-size: 32px; }
+            .page-title { font-size: 36px; }
+            .page-subtitle { font-size: 16px; }
             .content-container { padding: 24px; }
             .tabs-nav { gap: 4px; }
             .tab-btn { padding: 10px 16px; font-size: 14px; }
             .feature-list { grid-template-columns: 1fr; }
             .contact-showcase { grid-template-columns: 1fr; }
             .contact-qr { width: 140px; height: 140px; }
+            .beian-link { font-size: 16px; padding: 12px 20px; }
+            .brand-name { font-size: 18px; }
+            .company-name { font-size: 14px; }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- 导航栏 - 删除LOGO，仅保留品牌文字 -->
     <nav class="navbar">
-        <a href="index.html" class="logo">
-            <div class="logo-icon">🥣</div>
-            <span>小粥新媒体</span>
-        </a>
+        <a href="index.html" class="brand-text">小粥新媒体运营</a>
         
         <ul class="nav-links">
             <li><a href="index.html">首页</a></li>
@@ -919,7 +1033,7 @@
 
     <!-- 主内容 -->
     <main class="main-content">
-        <!-- 页面头部 -->
+        <!-- 页面头部 - 更新主标题和副标题 -->
         <header class="page-header">
             <div class="page-header-content">
                 <nav class="breadcrumb">
@@ -927,11 +1041,17 @@
                     <span>/</span>
                     <span>关于我们</span>
                 </nav>
-                <h1 class="page-title">关于小粥新媒体</h1>
+                <h1 class="page-title">小粥新媒体运营</h1>
                 <p class="page-subtitle">
-                    我们致力于为新媒体创作者提供专业的运营工具与策略指导，<br>
-                    助力每一位内容创作者实现从0到1的成长突破
+                    长丰县水湖镇小周新媒体信息咨询服务部<br>
+                    致力于为新媒体创作者提供专业的运营工具与策略指导
                 </p>
+                
+                <!-- 备案信息展示 -->
+                <div class="beian-showcase">
+                    <div class="beian-label">工信部备案号</div>
+                    <div class="beian-number">皖ICP备76313595号-1</div>
+                </div>
             </div>
         </header>
 
@@ -946,7 +1066,7 @@
                 <button class="tab-btn" onclick="switchTab('history')">更新日志</button>
             </div>
 
-            <!-- 标签页1：平台介绍 -->
+            <!-- 标签页1：平台介绍 - 更新品牌说明 -->
             <div id="tab-intro" class="tab-content active">
                 <div class="section-block">
                     <h2 class="section-title">
@@ -955,7 +1075,9 @@
                     </h2>
                     <div class="section-text">
                         <p>
-                            <strong>小粥新媒体</strong>诞生于2026年，是一个专注于新媒体运营领域的<strong>非经营性信息服务平台</strong>。
+                            <strong>小粥新媒体运营</strong>（品牌简称）隶属于<strong>长丰县水湖镇小周新媒体信息咨询服务部</strong>（备案主体），是一个专注于新媒体运营领域的<strong>非经营性信息服务平台</strong>。
+                        </p>
+                        <p>
                             我们的使命是为内容创作者提供<strong>专业、实用、免费</strong>的运营工具与策略指导，
                             降低新媒体运营的入门门槛，帮助创作者提升内容质量与运营效率。
                         </p>
@@ -1170,7 +1292,7 @@
                         <p><strong>最后更新日期：2026年3月28日</strong></p>
                         
                         <p>
-                            小粥新媒体（以下简称"本平台"）重视用户的隐私保护。本隐私政策旨在向您说明我们如何收集、使用和保护您的信息。
+                            小粥新媒体运营（以下简称"本平台"）隶属于长丰县水湖镇小周新媒体信息咨询服务部，重视用户的隐私保护。本隐私政策旨在向您说明我们如何收集、使用和保护您的信息。
                         </p>
 
                         <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--text-primary);">1. 信息收集</h3>
@@ -1217,7 +1339,7 @@
                         <p><strong>最后更新日期：2026年3月28日</strong></p>
                         
                         <p>
-                            欢迎使用小粥新媒体！请仔细阅读以下条款，使用本平台即表示您同意接受这些条款的约束。
+                            欢迎使用小粥新媒体运营！本平台由长丰县水湖镇小周新媒体信息咨询服务部运营。请仔细阅读以下条款，使用本平台即表示您同意接受这些条款的约束。
                         </p>
 
                         <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--text-primary);">1. 服务性质</h3>
@@ -1232,7 +1354,7 @@
 
                         <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--text-primary);">3. 知识产权</h3>
                         <p>
-                            本平台提供的工具代码、界面设计、文档内容等知识产权归平台所有。您可以自由使用平台生成的内容（如标题、策略等），但不得复制、修改、反编译平台本身。
+                            本平台提供的工具代码、界面设计、文档内容等知识产权归长丰县水湖镇小周新媒体信息咨询服务部所有。您可以自由使用平台生成的内容（如标题、策略等），但不得复制、修改、反编译平台本身。
                         </p>
 
                         <h3 style="font-size: 18px; font-weight: 700; margin: 24px 0 16px; color: var(--text-primary);">4. 免责声明</h3>
@@ -1267,6 +1389,15 @@
                     </h2>
                     
                     <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026年4月1日</div>
+                            <div class="timeline-title">V1.2.0 品牌信息完善</div>
+                            <div class="timeline-desc">
+                                更新品牌展示信息，明确"小粥新媒体运营"与"长丰县水湖镇小周新媒体信息咨询服务部"的关系，
+                                添加工信部备案信息展示，优化页面头部标题展示效果。
+                            </div>
+                        </div>
+                        
                         <div class="timeline-item">
                             <div class="timeline-date">2026年3月30日</div>
                             <div class="timeline-title">V1.1.0 联系方式更新</div>
@@ -1332,19 +1463,42 @@
         </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- 页脚 - 优化备案信息展示 -->
     <footer class="footer">
         <div class="footer-content">
+            <!-- 品牌与备案主体关系说明 -->
+            <div class="brand-relationship">
+                <div class="brand-name">小粥新媒体运营</div>
+                <div class="brand-arrow">⬇</div>
+                <div class="company-name">长丰县水湖镇小周新媒体信息咨询服务部</div>
+                <div class="relationship-note">
+                    "小粥新媒体运营"为品牌简称，"长丰县水湖镇小周新媒体信息咨询服务部"为备案真实名称
+                </div>
+            </div>
+
+            <!-- 备案信息区域 - 中央展示 -->
+            <div class="beian-section">
+                <div class="beian-title">工业和信息化部备案</div>
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="beian-link">
+                    皖ICP备76313595号-1
+                </a>
+            </div>
+
             <div class="footer-links">
                 <a href="about.html">关于我们</a>
                 <a href="about.html#contact">联系方式</a>
                 <a href="about.html#privacy">隐私政策</a>
                 <a href="about.html#terms">使用条款</a>
             </div>
-            <p>© 2026 小粥新媒体 | 非经营性网站 | 仅供学习交流使用</p>
-            <p style="margin-top: 8px; font-size: 12px;">
-                本平台仅提供新媒体运营相关信息咨询服务，不涉及新闻采编发布、教育、论坛互动、在线交易、医疗金融等需前置审批的内容
-            </p>
+            
+            <div class="copyright">
+                © 2026 小粥新媒体运营 | 长丰县水湖镇小周新媒体信息咨询服务部 | 非经营性网站
+            </div>
+            
+            <div class="disclaimer">
+                本平台仅提供新媒体运营相关信息咨询服务，不涉及新闻采编发布、教育、论坛互动、在线交易、医疗金融等需前置审批的内容<br>
+                所有工具与资源均免费提供，不收取任何费用
+            </div>
         </div>
     </footer>
 
@@ -1401,7 +1555,7 @@
             document.getElementById('qrcode1').innerHTML = '';
             document.getElementById('qrcode2').innerHTML = '';
             
-            // 生成微信一二维码（使用微信号的文本生成，实际应为微信名片链接）
+            // 生成微信一二维码
             new QRCode(document.getElementById('qrcode1'), {
                 text: 'cxnw513',
                 width: 128,
