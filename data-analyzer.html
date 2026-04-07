@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数据分析中心 - 小粥新媒体</title>
+    <title>数据分析中心 - 小粥新媒体运营</title>
     <meta name="description" content="专业的新媒体数据分析工具，提供粉丝增长模拟、内容效果分析、互动数据追踪等功能，助力数据驱动运营决策">
     
     <style>
@@ -147,29 +147,27 @@
             padding: 0 48px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 24px;
+        /* 品牌标题样式 - 无LOGO */
+        .brand-title {
+            font-size: 26px;
             font-weight: 800;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
             cursor: pointer;
             text-decoration: none;
+            transition: all var(--transition-fast);
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-gradient);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            -webkit-text-fill-color: white;
+        .brand-title:hover {
+            color: var(--accent-primary);
+        }
+
+        .brand-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
@@ -301,25 +299,27 @@
         /* 主内容 */
         .main-content { margin-top: 72px; min-height: calc(100vh - 72px); }
 
-        /* 页面头部 */
+        /* 页面头部 - 优化排版 */
         .page-header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
-            padding: 40px 48px;
+            padding: 48px 48px 40px;
+            text-align: center;
         }
 
         .page-header-content {
-            max-width: 1400px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .breadcrumb {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             color: var(--text-muted);
             font-size: 14px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .breadcrumb a {
@@ -331,18 +331,18 @@
         .breadcrumb a:hover { color: var(--accent-primary); }
 
         .page-title {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 800;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
         }
 
         .page-subtitle {
             color: var(--text-secondary);
             font-size: 18px;
             max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
         }
 
         /* 数据概览卡片 */
@@ -834,11 +834,11 @@
             color: var(--accent-primary);
         }
 
-        /* 页脚 */
+        /* 页脚 - 优化样式 */
         .footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-color);
-            padding: 40px 48px;
+            padding: 48px 48px;
             margin-top: 60px;
         }
 
@@ -846,8 +846,75 @@
             max-width: 1400px;
             margin: 0 auto;
             text-align: center;
-            color: var(--text-muted);
+        }
+
+        .footer-brand {
+            margin-bottom: 24px;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .footer-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .footer-relation {
             font-size: 14px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 24px;
+            line-height: 1.8;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-icp {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        .footer-icp a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .footer-icp a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 12px;
         }
 
         /* 提示框 */
@@ -893,10 +960,15 @@
             .navbar { padding: 0 24px; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: flex; }
-            .page-header { padding: 30px 24px; }
+            .page-header { padding: 36px 24px 32px; }
+            .page-title { font-size: 32px; }
             .stats-overview { grid-template-columns: 1fr; padding: 24px; }
             .workspace { padding: 0 24px 24px; }
             .analysis-cards { grid-template-columns: 1fr; }
+            .footer { padding: 36px 24px; }
+            .footer-links { gap: 20px; }
+            .brand-title { font-size: 22px; }
+            .brand-subtitle { font-size: 12px; }
         }
 
         /* 动画 */
@@ -955,11 +1027,11 @@
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- 导航栏 - 无LOGO，纯文字品牌 -->
     <nav class="navbar">
-        <a href="index.html" class="logo">
-            <div class="logo-icon">🥣</div>
-            <span>小粥新媒体</span>
+        <a href="index.html" class="brand-title">
+            <div>小粥新媒体运营</div>
+            <div class="brand-subtitle">长丰县水湖镇小周新媒体信息咨询服务部</div>
         </a>
         
         <ul class="nav-links">
@@ -1003,7 +1075,7 @@
 
     <!-- 主内容 -->
     <main class="main-content">
-        <!-- 页面头部 -->
+        <!-- 页面头部 - 优化排版 -->
         <header class="page-header">
             <div class="page-header-content">
                 <nav class="breadcrumb">
@@ -1372,11 +1444,33 @@
         </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- 页脚 - 优化排版，添加品牌关系说明和工信部链接 -->
     <footer class="footer">
         <div class="footer-content">
-            <p>© 2026 小粥新媒体 | 数据分析中心 | 仅供学习交流使用</p>
-            <p style="margin-top: 8px; font-size: 12px;">免责声明：本页面所有数据均为模拟演示，不代表真实运营数据</p>
+            <div class="footer-brand">
+                <div class="footer-title">小粥新媒体运营</div>
+                <div class="footer-subtitle">长丰县水湖镇小周新媒体信息咨询服务部</div>
+            </div>
+            
+            <div class="footer-relation">
+                <strong>品牌说明：</strong>"小粥新媒体运营"为品牌简称，"长丰县水湖镇小周新媒体信息咨询服务部"为备案真实名称，二者指向同一主体。本平台仅提供新媒体运营相关信息咨询服务，不涉及新闻采编发布、教育培训、论坛互动、在线交易、医疗金融等需前置审批的业务。
+            </div>
+            
+            <div class="footer-links">
+                <a href="about.html">关于我们</a>
+                <a href="about.html#contact">联系方式</a>
+                <a href="about.html#privacy">隐私政策</a>
+                <a href="about.html#terms">使用条款</a>
+            </div>
+            
+            <div class="footer-icp">
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">工信部官网</a> | 
+                仅供学习交流使用 | 非经营性网站
+            </div>
+            
+            <div class="footer-copyright">
+                © 2026 小粥新媒体运营 / 长丰县水湖镇小周新媒体信息咨询服务部 版权所有
+            </div>
         </div>
     </footer>
 
